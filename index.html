@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>上财MBA课程日历 · 2026.9 – 2027.1 v5</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap');
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg-start:#faf5ee;--bg-end:#f0e8f6;
+  --surface:#fffefd;--surface-glass:rgba(255,254,253,0.72);
+  --text:#1a1817;--muted:#6b6560;
+  --faint:#c4bab0;--border:rgba(0,0,0,.08);
+  --shadow-card:0 1px 3px rgba(0,0,0,.04),0 4px 24px rgba(0,0,0,.06);
+  --shadow-hover:0 2px 6px rgba(0,0,0,.06),0 8px 40px rgba(0,0,0,.12);
+  --shadow-lg:0 4px 12px rgba(0,0,0,.04),0 16px 48px rgba(0,0,0,.1);
+  --radius:16px;--radius-sm:10px;
+  --ease-out:500ms cubic-bezier(.16,1,.3,1);
+  --ease-spring:600ms cubic-bezier(.34,1.56,.64,1);
+  --ease-smooth:400ms cubic-bezier(.4,0,.2,1);
+}
+
+body{
+  font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,sans-serif;
+  background:linear-gradient(180deg,var(--bg-start) 0%,var(--bg-end) 40%,var(--bg-start) 100%);
+  color:var(--text);min-height:100vh;padding:0 24px 80px;line-height:1.6;
+  position:relative;overflow-x:hidden
+}
+
+/* ===== 背景动态元素 ===== */
+.bg-orb{
+  position:fixed;border-radius:50%;filter:blur(80px);opacity:.18;
+  pointer-events:none;z-index:0;will-change:transform
+}
+.bg-orb:nth-child(1){width:420px;height:420px;background:radial-gradient(circle,#f472b6,#e879f9);top:-8%;left:-6%;animation:float1 18s ease-in-out infinite}
+.bg-orb:nth-child(2){width:360px;height:360px;background:radial-gradient(circle,#60a5fa,#818cf8);top:45%;right:-8%;animation:float2 22s ease-in-out infinite}
+.bg-orb:nth-child(3){width:300px;height:300px;background:radial-gradient(circle,#fbbf24,#f59e0b);bottom:-5%;left:35%;animation:float3 20s ease-in-out infinite}
+.bg-orb:nth-child(4){width:260px;height:260px;background:radial-gradient(circle,#34d399,#10b981);top:70%;left:-4%;animation:float1 16s ease-in-out infinite reverse}
+.bg-orb:nth-child(5){width:200px;height:200px;background:radial-gradient(circle,#f87171,#ef4444);top:15%;right:25%;animation:float2 14s ease-in-out infinite}
+
+@keyframes float1{
+  0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}
+  25%{transform:translate(60px,-30px) rotate(3deg) scale(1.08)}
+  50%{transform:translate(-20px,-50px) rotate(-2deg) scale(.94)}
+  75%{transform:translate(-40px,20px) rotate(1deg) scale(1.05)}
+}
+@keyframes float2{
+  0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}
+  33%{transform:translate(-50px,40px) rotate(-3deg) scale(1.06)}
+  66%{transform:translate(30px,-35px) rotate(2deg) scale(.93)}
+}
+@keyframes float3{
+  0%,100%{transform:translate(0,0) scale(1)}
+  20%{transform:translate(35px,-45px) scale(1.1)}
+  40%{transform:translate(-25px,30px) scale(.92)}
+  60%{transform:translate(45px,25px) scale(1.04)}
+  80%{transform:translate(-35px,-20px) scale(.96)}
+}
+
+/* ===== 粒子 ===== */
+.particles{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0
+}
+.particle{
+  position:absolute;border-radius:50%;animation:drift var(--dur) linear infinite;
+  animation-delay:var(--delay);opacity:.35
+}
+@keyframes drift{
+  0%{transform:translateY(105vh) rotate(0deg);opacity:0}
+  10%{opacity:.35}
+  90%{opacity:.35}
+  100%{transform:translateY(-10vh) rotate(var(--rot));opacity:0}
+}
+
+/* ===== 容器 ===== */
+.container{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+
+/* ===== Hero ===== */
+.hero{
+  padding:48px 0 28px;position:relative;
+  animation:heroIn 900ms cubic-bezier(.16,1,.3,1) both
+}
+@keyframes heroIn{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.hero h1{
+  font-size:clamp(2rem,5vw,2.8rem);font-weight:900;
+  background:linear-gradient(135deg,#c026d3 0%,#7c3aed 20%,#2563eb 45%,#059669 70%,#d97706 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:gradientShift 6s ease-in-out infinite;
+  letter-spacing:-1px;line-height:1.2;margin-bottom:6px
+}
+.ver-badge{font-size:.45em;font-weight:700;vertical-align:super;background:linear-gradient(135deg,#7c3aed,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-left:6px;letter-spacing:0}
+@keyframes gradientShift{
+  0%,100%{background-position:0% center}
+  50%{background-position:100% center}
+}
+.hero .subtitle{
+  font-size:1rem;color:var(--muted);font-weight:400;display:flex;align-items:center;gap:12px;flex-wrap:wrap
+}
+.hero .stats{
+  display:flex;gap:10px;margin-top:6px;flex-wrap:wrap
+}
+.hero .stat-pill{
+  padding:5px 16px;border-radius:20px;font-size:.8rem;font-weight:600;
+  color:#fff;animation:pillIn 600ms cubic-bezier(.34,1.56,.64,1) both
+}
+.stat-pill:nth-child(1){background:linear-gradient(135deg,#7c3aed,#a855f7);animation-delay:200ms}
+.stat-pill:nth-child(2){background:linear-gradient(135deg,#059669,#10b981);animation-delay:350ms}
+.stat-pill:nth-child(3){background:linear-gradient(135deg,#d97706,#f59e0b);animation-delay:500ms}
+@keyframes pillIn{
+  from{opacity:0;transform:scale(.6) translateY(8px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+/* ===== 筛选器 ===== */
+.filter-bar{
+  display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap;align-items:center;
+  animation:heroIn 900ms cubic-bezier(.16,1,.3,1) 200ms both;
+  position:relative;z-index:50
+}
+.dropdown{position:relative;min-width:190px;user-select:none}
+.dropdown-trigger{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  width:100%;padding:12px 18px;background:var(--surface-glass);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.9rem;font-family:inherit;color:var(--text);
+  cursor:pointer;transition:all var(--ease-smooth);
+  box-shadow:0 1px 2px rgba(0,0,0,.03)
+}
+.dropdown-trigger:hover{
+  border-color:rgba(124,58,237,.4);box-shadow:0 2px 12px rgba(124,58,237,.1)
+}
+.dropdown-trigger:focus-visible{outline:2px solid #7c3aed;outline-offset:2px}
+.dropdown-trigger .arrow{
+  transition:transform var(--ease-out);font-size:.7rem;color:var(--muted)
+}
+.dropdown.open .dropdown-trigger{
+  border-color:#7c3aed;box-shadow:0 2px 16px rgba(124,58,237,.15);
+  background:var(--surface)
+}
+.dropdown.open{z-index:300}
+.dropdown.open .dropdown-trigger .arrow{transform:rotate(180deg);color:#7c3aed}
+
+.dropdown-menu{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:200;
+  background:var(--surface);border:1.5px solid rgba(0,0,0,.07);
+  border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);
+  max-height:280px;overflow-y:auto;
+  opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;
+  transition:all var(--ease-out)
+}
+.dropdown.open .dropdown-menu{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.dropdown.flip .dropdown-menu{
+  top:auto;bottom:calc(100% + 8px);
+  transform:translateY(8px) scale(.97)
+}
+.dropdown.flip.open .dropdown-menu{transform:translateY(0) scale(1)}
+.dropdown-option{
+  padding:11px 18px;font-size:.88rem;cursor:pointer;
+  transition:all 200ms ease;color:var(--text);
+  display:flex;align-items:center;gap:10px;position:relative;overflow:hidden
+}
+.dropdown-option::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,#7c3aed,#a855f7);
+  transform:scaleY(0);transition:transform 200ms ease
+}
+.dropdown-option:hover{background:#f5f0fd}
+.dropdown-option:hover::before{transform:scaleY(1)}
+.dropdown-option.selected{font-weight:700;background:#f3e8ff;color:#6d28d9}
+.dropdown-option.selected::before{transform:scaleY(1)}
+.dropdown-option .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.dropdown-option .clear-option{color:var(--muted);font-style:italic}
+
+.match-count{
+  font-size:.84rem;color:var(--muted);display:flex;align-items:center;gap:8px;
+  padding:8px 0;margin-left:auto;font-weight:500
+}
+.match-count span{
+  font-size:1.1rem;font-weight:800;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+
+/* ===== 卡片区 ===== */
+.card-scroll-wrapper{position:relative;margin-bottom:28px}
+.card-scroll{
+  display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;
+  padding:12px 6px 20px;
+  scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.08) transparent;
+  -webkit-overflow-scrolling:touch
+}
+.card-scroll::-webkit-scrollbar{height:5px}
+.card-scroll::-webkit-scrollbar-track{background:transparent}
+.card-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.08);border-radius:4px}
+.card-scroll::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.15)}
+
+.course-card{
+  flex:0 0 auto;min-width:290px;max-width:340px;
+  background:var(--surface);border-radius:var(--radius);
+  padding:24px 24px;box-shadow:var(--shadow-card);
+  transition:all var(--ease-out);
+  cursor:pointer;position:relative;overflow:hidden;
+  animation:cardIn 500ms cubic-bezier(.34,1.56,.64,1) both;
+  border:1.5px solid transparent
+}
+.course-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--card-color,#ccc),color-mix(in srgb,var(--card-color,#ccc) 40%,#fff));
+  transition:height var(--ease-out)
+}
+.course-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,var(--card-color,#ccc) 0%,transparent 50%);
+  opacity:0;transition:opacity var(--ease-out);z-index:0
+}
+.course-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:var(--shadow-hover);
+  border-color:var(--card-color,rgba(0,0,0,.1))
+}
+.course-card:hover::before{height:100%;opacity:.04}
+.course-card:hover::after{opacity:.08}
+.course-card>*{position:relative;z-index:1}
+.course-card .card-date{
+  font-size:.78rem;color:var(--muted);margin-bottom:8px;
+  display:flex;align-items:center;gap:8px
+}
+.course-card .card-date .wd-tag{
+  padding:3px 10px;border-radius:10px;font-size:.7rem;color:#fff;font-weight:700;
+  box-shadow:0 2px 8px rgba(var(--tag-rgb),.3);letter-spacing:.3px
+}
+.course-card .card-title{
+  font-size:1.08rem;font-weight:700;margin-bottom:6px;color:var(--text);line-height:1.3
+}
+.course-card .card-teacher{font-size:.82rem;color:var(--muted);margin-bottom:10px}
+.course-card .card-meta{
+  font-size:.76rem;color:var(--faint);display:flex;flex-direction:column;gap:3px;
+  padding-top:10px;border-top:1px solid rgba(0,0,0,.05)
+}
+.card-empty{
+  flex:0 0 auto;min-width:290px;display:flex;align-items:center;justify-content:center;
+  background:var(--surface-glass);backdrop-filter:blur(16px);
+  border-radius:var(--radius);padding:40px;
+  color:var(--muted);font-size:.9rem;box-shadow:var(--shadow-card);
+  border:1.5px dashed var(--border);
+  animation:pulseEmpty 2s ease-in-out infinite
+}
+@keyframes pulseEmpty{
+  0%,100%{border-color:rgba(0,0,0,.06);box-shadow:var(--shadow-card)}
+  50%{border-color:rgba(124,58,237,.2);box-shadow:0 2px 16px rgba(124,58,237,.08)}
+}
+
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(24px) scale(.94)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.scroll-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:42px;height:42px;border-radius:50%;border:1.5px solid var(--border);
+  background:var(--surface-glass);backdrop-filter:blur(12px);
+  color:var(--text);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;transition:all var(--ease-out);
+  box-shadow:var(--shadow-card)
+}
+.scroll-btn:hover{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;
+  border-color:transparent;transform:translateY(-50%) scale(1.1);
+  box-shadow:0 4px 20px rgba(124,58,237,.3)
+}
+.scroll-btn:active{transform:translateY(-50%) scale(.95)}
+.scroll-btn.left{left:-16px}
+.scroll-btn.right{right:-16px}
+.scroll-btn.hidden{opacity:0;pointer-events:none;transform:translateY(-50%) scale(.8)}
+
+/* ===== 日历区 ===== */
+.section-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;cursor:pointer;
+  font-size:1.15rem;font-weight:700;color:var(--text);user-select:none;
+  padding:14px 0;
+  transition:color var(--ease-smooth)
+}
+.section-header:hover{color:#7c3aed}
+.section-header .collapse-icon{
+  width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;transition:all var(--ease-out);flex-shrink:0
+}
+.section-header.collapsed .collapse-icon{transform:rotate(-90deg);background:linear-gradient(135deg,#d4d4d8,#a1a1aa)}
+.section-header .section-divider{
+  flex:1;height:1px;background:linear-gradient(90deg,rgba(124,58,237,.2),transparent)
+}
+.calendar-wrap{
+  transition:max-height 500ms cubic-bezier(.4,0,.2,1),opacity 400ms var(--ease-smooth),margin 500ms var(--ease-smooth);
+  max-height:8000px;overflow:hidden;margin-bottom:32px
+}
+.calendar-wrap.collapsed{max-height:0;opacity:0;margin-bottom:0}
+
+.month-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(560px,1fr));
+  gap:24px
+}
+.month-card{
+  background:var(--surface);border-radius:var(--radius);
+  box-shadow:var(--shadow-card);overflow:hidden;
+  transition:all var(--ease-out);border:1.5px solid transparent;
+  animation:cardIn 500ms cubic-bezier(.34,1.56,.64,1) both
+}
+.month-card:hover{box-shadow:var(--shadow-hover);border-color:rgba(124,58,237,.15)}
+.month-card.highlight{
+  box-shadow:0 0 0 2px #7c3aed,0 8px 32px rgba(124,58,237,.18);
+  animation:highlightPulse 1.8s ease-in-out
+}
+@keyframes highlightPulse{
+  0%,100%{box-shadow:0 0 0 2px #7c3aed,0 8px 32px rgba(124,58,237,.18)}
+  50%{box-shadow:0 0 0 4px #a855f7,0 12px 40px rgba(124,58,237,.28)}
+}
+
+.month-header{
+  padding:16px 22px;font-size:1.1rem;font-weight:800;
+  border-bottom:1px solid var(--border);color:var(--text);
+  display:flex;align-items:baseline;gap:8px;
+  background:linear-gradient(90deg,rgba(124,58,237,.03),transparent)
+}
+.month-header::before{
+  content:'';width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,#7c3aed,#c026d3);
+  box-shadow:0 2px 8px rgba(124,58,237,.4)
+}
+.month-header .year{font-size:.78rem;color:var(--muted);font-weight:400}
+
+.cal-table{width:100%;table-layout:fixed;border-collapse:collapse}
+.cal-table thead th{
+  font-size:.7rem;color:var(--muted);font-weight:600;
+  padding:10px 0;text-align:center;text-transform:uppercase;letter-spacing:.5px
+}
+.cal-table thead th.we{color:#dc2626;font-weight:700}
+.cal-table thead th.week-th{width:52px;min-width:52px;font-size:.65rem;color:var(--muted);font-weight:600}
+.cal-table tbody td{
+  height:92px;vertical-align:top;padding:6px 4px 20px;font-size:.88rem;
+  color:var(--faint);position:relative;overflow:hidden;
+  border-top:1px solid rgba(0,0,0,.04);width:calc((100% - 52px) / 7);
+  transition:background 300ms ease,transform 200ms ease
+}
+.cal-table tbody td:nth-child(2){border-left:1px solid rgba(0,0,0,.04)}
+.cal-table tbody td.has-course{cursor:pointer;color:var(--text)}
+.cal-table tbody td.has-course:hover{background:rgba(124,58,237,.04)}
+.cal-table tbody td.has-course:active{transform:scale(.97)}
+.cal-table tbody td.today-cell{background:rgba(251,191,36,.08);box-shadow:inset 0 0 0 2px #f59e0b;border-radius:6px}
+.cal-table tbody td.week-col{
+  width:52px;min-width:52px;text-align:center;vertical-align:middle;
+  font-size:.68rem;color:var(--muted);font-weight:500;
+  background:rgba(124,58,237,.03);border-top:1px solid rgba(0,0,0,.04)
+}
+.cal-table tbody td.other-month{
+  color:var(--faint);opacity:.35;pointer-events:none
+}
+
+.badge-row{display:flex;flex-direction:column;gap:2px;padding-top:2px}
+.course-chip{
+  font-size:.7rem;font-weight:700;color:#fff;padding:3px 8px;border-radius:4px;
+  white-space:normal;max-width:100%;line-height:1.45;
+  transition:transform var(--ease-out),box-shadow var(--ease-out);
+  box-shadow:0 1px 3px rgba(0,0,0,.15);opacity:1;cursor:pointer
+}
+td.has-course:hover .course-chip{
+  transform:scale(1.06);
+  box-shadow:0 3px 12px rgba(var(--chip-rgb),.4)
+}
+.course-chip{
+  animation:chipIn 300ms cubic-bezier(.34,1.56,.64,1) both
+}
+.course-chip.dim-chip{opacity:0.25!important}
+@keyframes chipIn{
+  from{opacity:0;transform:scale(.5) translateY(-4px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+.day-num{position:absolute;bottom:4px;right:10px;font-size:.95rem;font-weight:800}
+td.has-course .day-num{
+  color:var(--text);
+  background:linear-gradient(135deg,var(--card-color,#7c3aed),color-mix(in srgb,var(--card-color,#7c3aed) 60%,#fff));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+td:not(.has-course) .day-num{color:var(--faint)}
+
+/* ===== 课程详情弹框 ===== */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(12px) saturate(.6);
+  -webkit-backdrop-filter:blur(12px) saturate(.6);
+  animation:fadeIn 250ms ease-out
+}
+.modal-overlay.closing{animation:fadeOut 200ms ease-in forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+
+.modal-dialog{
+  background:rgba(255,255,255,.94);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.18);
+  width:90%;max-width:420px;overflow:hidden;
+  animation:modalIn 350ms cubic-bezier(.34,1.56,.64,1)
+}
+.modal-dialog.closing{animation:modalOut 200ms ease-in forwards}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes modalOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(16px) scale(.96)}}
+
+.modal-color-bar{
+  height:4px;width:100%
+}
+.modal-body{
+  padding:28px 32px 24px
+}
+.modal-title{
+  font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:18px;line-height:1.3
+}
+.modal-field{
+  display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.04)
+}
+.modal-field:last-child{border-bottom:none}
+.modal-field .field-icon{
+  flex-shrink:0;width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--muted)
+}
+.modal-field .field-content{flex:1;min-width:0}
+.modal-field .field-label{
+  font-size:.72rem;color:var(--muted);font-weight:500;margin-bottom:1px;text-transform:uppercase;letter-spacing:.5px
+}
+.modal-field .field-value{
+  font-size:.92rem;color:var(--text);font-weight:500;line-height:1.4
+}
+.modal-close-btn{
+  display:block;width:100%;padding:14px;margin:0;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;
+  border:none;border-radius:0 0 20px 20px;font-size:.95rem;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  transition:all 200ms ease
+}
+.modal-close-btn:hover{background:linear-gradient(135deg,#6d28d9,#9333ea)}
+.modal-close-btn:active{transform:scale(.98)}
+
+/* ===== 明细表 ===== */
+.summary{
+  background:var(--surface);border-radius:var(--radius);
+  padding:28px 32px;box-shadow:var(--shadow-card);
+  animation:cardIn 500ms cubic-bezier(.34,1.56,.64,1) 100ms both
+}
+.summary h2{
+  font-size:1.15rem;font-weight:800;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px
+}
+.summary h2::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(124,58,237,.15),transparent)
+}
+.summary-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.summary-table th{
+  background:linear-gradient(135deg,#2d2840,#3d3560);
+  color:#f0e8ff;padding:11px 14px;text-align:left;font-size:.76rem;font-weight:600;
+  letter-spacing:.4px
+}
+.summary-table th:first-child{border-radius:8px 0 0 0}
+.summary-table th:last-child{border-radius:0 8px 0 0}
+.summary-table td{padding:11px 14px;border-bottom:1px solid rgba(0,0,0,.04);transition:all 200ms ease}
+.summary-table tr{transition:all 200ms ease}
+.summary-table tr:hover td{background:rgba(124,58,237,.03)}
+.summary-table tr:last-child td:first-child{border-radius:0 0 0 8px}
+.summary-table tr:last-child td:last-child{border-radius:0 0 8px 0}
+.wd-badge{padding:2px 10px;border-radius:10px;font-size:.7rem;color:#fff;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.wd0{background:linear-gradient(135deg,#3b82f6,#60a5fa)}.wd1{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
+.wd2{background:linear-gradient(135deg,#06b6d4,#22d3ee)}.wd3{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.wd4{background:linear-gradient(135deg,#ef4444,#f87171)}.wd5{background:linear-gradient(135deg,#e67e22,#f59e0b)}
+.wd6{background:linear-gradient(135deg,#ec4899,#f472b6)}
+
+.footer-note{text-align:right;margin-top:18px;font-size:.78rem;color:var(--muted);font-style:italic}
+
+/* ===== 响应式 ===== */
+@media(max-width:700px){
+  body{padding:0 12px 60px}
+  .month-grid{grid-template-columns:1fr}
+  .filter-bar{flex-direction:column;gap:10px}
+  .dropdown{min-width:100%}
+  .cal-table tbody td{height:58px}
+  .course-chip{font-size:.55rem}
+  .card-scroll{gap:12px}
+  .course-card{min-width:250px}
+  .bg-orb{display:none}
+  .modal-dialog{max-width:92vw}
+  .cal-table thead th.week-th,.cal-table tbody td.week-col{width:36px;min-width:36px;font-size:.55rem;padding:0 2px}
+  .cal-table tbody td{width:calc((100% - 36px) / 7)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,::before,::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .bg-orb,.particles{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 动态背景 -->
+<div class="bg-orb"></div><div class="bg-orb"></div><div class="bg-orb"></div><div class="bg-orb"></div><div class="bg-orb"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+<h1>上财 MBA 课程日历<span class="ver-badge">v5</span></h1>
+<div class="subtitle">2026 年 9 月 — 2027 年 1 月</div>
+<div class="stats">
+  <span class="stat-pill">36 个上课日</span>
+  <span class="stat-pill">10 门课程</span>
+  <span class="stat-pill">5 个教学月</span>
+</div>
+</div>
+
+<!-- 筛选 -->
+<div class="filter-bar">
+  <div class="dropdown" id="dropdown-month">
+    <button class="dropdown-trigger" onclick="toggleDropdown('dropdown-month')">
+      <span id="month-label">全部月份</span><span class="arrow">▾</span>
+    </button>
+    <div class="dropdown-menu" id="month-menu"></div>
+  </div>
+  <div class="dropdown" id="dropdown-course">
+    <button class="dropdown-trigger" onclick="toggleDropdown('dropdown-course')">
+      <span id="course-label">全部课程</span><span class="arrow">▾</span>
+    </button>
+    <div class="dropdown-menu" id="course-menu"></div>
+  </div>
+  <div class="match-count" id="match-count"></div>
+</div>
+
+<!-- 课程卡片 -->
+<div class="card-scroll-wrapper">
+  <button class="scroll-btn left" onclick="scrollCards(-1)">◂</button>
+  <div class="card-scroll" id="card-scroll"></div>
+  <button class="scroll-btn right" onclick="scrollCards(1)">▸</button>
+</div>
+
+<!-- 日历区 -->
+<div class="section-header" id="cal-section-header" onclick="toggleCalendar()">
+  <span class="collapse-icon">▾</span> 日历视图
+  <span class="section-divider"></span>
+</div>
+<div class="calendar-wrap" id="calendar-wrap">
+<div class="month-grid">
+<div class="month-card" data-month-card="2026-09"><div class="month-header">九月<span class="year">2026</span></div><table class="cal-table"><thead><tr><th class="week-th">周次</th><th class="we">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th class="we">六</th></tr></thead><tbody><tr><td class="week-col">第1周</td><td class="other-month"><span class="day-num">30</span></td><td class="other-month"><span class="day-num">31</span></td><td class=""><span class="day-num">1</span></td><td class=""><span class="day-num">2</span></td><td class=""><span class="day-num">3</span></td><td class=""><span class="day-num">4</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#3b82f6;--chip-rgb:59,130,246" data-detail='{&quot;course&quot;: &quot;财务报告与价值分析&quot;, &quot;teacher&quot;: &quot;孙峥&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-09-05&quot;}'>财务报告与价值分析</span></div><span class="day-num">5</span></td></tr><tr><td class="week-col">第2周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#3b82f6;--chip-rgb:59,130,246" data-detail='{&quot;course&quot;: &quot;财务报告与价值分析&quot;, &quot;teacher&quot;: &quot;孙峥&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-09-06&quot;}'>财务报告与价值分析</span></div><span class="day-num">6</span></td><td class=""><span class="day-num">7</span></td><td class=""><span class="day-num">8</span></td><td class=""><span class="day-num">9</span></td><td class=""><span class="day-num">10</span></td><td class=""><span class="day-num">11</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#3b82f6;--chip-rgb:59,130,246" data-detail='{&quot;course&quot;: &quot;财务报告与价值分析&quot;, &quot;teacher&quot;: &quot;孙峥&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-09-12&quot;}'>财务报告与价值分析</span></div><span class="day-num">12</span></td></tr><tr><td class="week-col">第3周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#3b82f6;--chip-rgb:59,130,246" data-detail='{&quot;course&quot;: &quot;财务报告与价值分析&quot;, &quot;teacher&quot;: &quot;孙峥&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-09-13&quot;}'>财务报告与价值分析</span></div><span class="day-num">13</span></td><td class=""><span class="day-num">14</span></td><td class=""><span class="day-num">15</span></td><td class=""><span class="day-num">16</span></td><td class=""><span class="day-num">17</span></td><td class=""><span class="day-num">18</span></td><td class=""><span class="day-num">19</span></td></tr><tr><td class="week-col">第4周</td><td class=""><span class="day-num">20</span></td><td class=""><span class="day-num">21</span></td><td class=""><span class="day-num">22</span></td><td class=""><span class="day-num">23</span></td><td class=""><span class="day-num">24</span></td><td class=""><span class="day-num">25</span></td><td class=""><span class="day-num">26</span></td></tr><tr><td class="week-col">第5周</td><td class=""><span class="day-num">27</span></td><td class=""><span class="day-num">28</span></td><td class=""><span class="day-num">29</span></td><td class=""><span class="day-num">30</span></td><td class="other-month"><span class="day-num">1</span></td><td class="other-month"><span class="day-num">2</span></td><td class="other-month"><span class="day-num">3</span></td></tr></tbody></table></div>
+<div class="month-card" data-month-card="2026-10"><div class="month-header">十月<span class="year">2026</span></div><table class="cal-table"><thead><tr><th class="week-th">周次</th><th class="we">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th class="we">六</th></tr></thead><tbody><tr><td class="week-col">第5周</td><td class="other-month"><span class="day-num">27</span></td><td class="other-month"><span class="day-num">28</span></td><td class="other-month"><span class="day-num">29</span></td><td class="other-month"><span class="day-num">30</span></td><td class=""><span class="day-num">1</span></td><td class=""><span class="day-num">2</span></td><td class=""><span class="day-num">3</span></td></tr><tr><td class="week-col">第6周</td><td class=""><span class="day-num">4</span></td><td class=""><span class="day-num">5</span></td><td class=""><span class="day-num">6</span></td><td class=""><span class="day-num">7</span></td><td class=""><span class="day-num">8</span></td><td class=""><span class="day-num">9</span></td><td class=""><span class="day-num">10</span></td></tr><tr><td class="week-col">第7周</td><td class=""><span class="day-num">11</span></td><td class=""><span class="day-num">12</span></td><td class=""><span class="day-num">13</span></td><td class=""><span class="day-num">14</span></td><td class=""><span class="day-num">15</span></td><td class=""><span class="day-num">16</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#06b6d4;--chip-rgb:6,182,212" data-detail='{&quot;course&quot;: &quot;供应链管理-企业&quot;, &quot;teacher&quot;: &quot;谢家平&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-17&quot;}'>供应链管理</span>
+<span class="course-chip" style="background:#10b981;--chip-rgb:16,185,129" data-detail='{&quot;course&quot;: &quot;创业投融资&quot;, &quot;teacher&quot;: &quot;蔺楠&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-17&quot;}'>创业投融资</span></div><span class="day-num">17</span></td></tr><tr><td class="week-col">第8周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ef4444;--chip-rgb:239,68,68" data-detail='{&quot;course&quot;: &quot;创造团队竞争优势&quot;, &quot;teacher&quot;: &quot;容琰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-18&quot;}'>团队竞争优势</span>
+<span class="course-chip" style="background:#6366f1;--chip-rgb:99,102,241" data-detail='{&quot;course&quot;: &quot;新技术与创新管理&quot;, &quot;teacher&quot;: &quot;周照&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-18&quot;}'>新技术与创新</span></div><span class="day-num">18</span></td><td class=""><span class="day-num">19</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-10-20&quot;}'>行为金融学</span></div><span class="day-num">20</span></td><td class=""><span class="day-num">21</span></td><td class=""><span class="day-num">22</span></td><td class=""><span class="day-num">23</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#06b6d4;--chip-rgb:6,182,212" data-detail='{&quot;course&quot;: &quot;供应链管理-企业&quot;, &quot;teacher&quot;: &quot;谢家平&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-24&quot;}'>供应链管理</span>
+<span class="course-chip" style="background:#10b981;--chip-rgb:16,185,129" data-detail='{&quot;course&quot;: &quot;创业投融资&quot;, &quot;teacher&quot;: &quot;蔺楠&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-24&quot;}'>创业投融资</span></div><span class="day-num">24</span></td></tr><tr><td class="week-col">第9周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ef4444;--chip-rgb:239,68,68" data-detail='{&quot;course&quot;: &quot;创造团队竞争优势&quot;, &quot;teacher&quot;: &quot;容琰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-25&quot;}'>团队竞争优势</span>
+<span class="course-chip" style="background:#6366f1;--chip-rgb:99,102,241" data-detail='{&quot;course&quot;: &quot;新技术与创新管理&quot;, &quot;teacher&quot;: &quot;周照&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-25&quot;}'>新技术与创新</span></div><span class="day-num">25</span></td><td class=""><span class="day-num">26</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-10-27&quot;}'>行为金融学</span></div><span class="day-num">27</span></td><td class=""><span class="day-num">28</span></td><td class=""><span class="day-num">29</span></td><td class=""><span class="day-num">30</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#06b6d4;--chip-rgb:6,182,212" data-detail='{&quot;course&quot;: &quot;供应链管理-企业&quot;, &quot;teacher&quot;: &quot;谢家平&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-31&quot;}'>供应链管理</span>
+<span class="course-chip" style="background:#10b981;--chip-rgb:16,185,129" data-detail='{&quot;course&quot;: &quot;创业投融资&quot;, &quot;teacher&quot;: &quot;蔺楠&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-10-31&quot;}'>创业投融资</span></div><span class="day-num">31</span></td></tr></tbody></table></div>
+<div class="month-card" data-month-card="2026-11"><div class="month-header">十一月<span class="year">2026</span></div><table class="cal-table"><thead><tr><th class="week-th">周次</th><th class="we">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th class="we">六</th></tr></thead><tbody><tr><td class="week-col">第10周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ef4444;--chip-rgb:239,68,68" data-detail='{&quot;course&quot;: &quot;创造团队竞争优势&quot;, &quot;teacher&quot;: &quot;容琰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-01&quot;}'>团队竞争优势</span>
+<span class="course-chip" style="background:#6366f1;--chip-rgb:99,102,241" data-detail='{&quot;course&quot;: &quot;新技术与创新管理&quot;, &quot;teacher&quot;: &quot;周照&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-01&quot;}'>新技术与创新</span></div><span class="day-num">1</span></td><td class=""><span class="day-num">2</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-11-03&quot;}'>行为金融学</span></div><span class="day-num">3</span></td><td class=""><span class="day-num">4</span></td><td class=""><span class="day-num">5</span></td><td class=""><span class="day-num">6</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#06b6d4;--chip-rgb:6,182,212" data-detail='{&quot;course&quot;: &quot;供应链管理-企业&quot;, &quot;teacher&quot;: &quot;谢家平&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-07&quot;}'>供应链管理</span>
+<span class="course-chip" style="background:#10b981;--chip-rgb:16,185,129" data-detail='{&quot;course&quot;: &quot;创业投融资&quot;, &quot;teacher&quot;: &quot;蔺楠&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-07&quot;}'>创业投融资</span></div><span class="day-num">7</span></td></tr><tr><td class="week-col">第11周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ef4444;--chip-rgb:239,68,68" data-detail='{&quot;course&quot;: &quot;创造团队竞争优势&quot;, &quot;teacher&quot;: &quot;容琰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-08&quot;}'>团队竞争优势</span>
+<span class="course-chip" style="background:#6366f1;--chip-rgb:99,102,241" data-detail='{&quot;course&quot;: &quot;新技术与创新管理&quot;, &quot;teacher&quot;: &quot;周照&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-08&quot;}'>新技术与创新</span></div><span class="day-num">8</span></td><td class=""><span class="day-num">9</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-11-10&quot;}'>行为金融学</span></div><span class="day-num">10</span></td><td class=""><span class="day-num">11</span></td><td class=""><span class="day-num">12</span></td><td class=""><span class="day-num">13</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#f59e0b;--chip-rgb:245,158,11" data-detail='{&quot;course&quot;: &quot;中国品牌&quot;, &quot;teacher&quot;: &quot;叶巍岭&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-14&quot;}'>中国品牌</span></div><span class="day-num">14</span></td></tr><tr><td class="week-col">第12周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ec4899;--chip-rgb:236,72,153" data-detail='{&quot;course&quot;: &quot;冲突管理与谈判&quot;, &quot;teacher&quot;: &quot;韩王兰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-15&quot;}'>冲突管理与谈判</span></div><span class="day-num">15</span></td><td class=""><span class="day-num">16</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-11-17&quot;}'>行为金融学</span></div><span class="day-num">17</span></td><td class=""><span class="day-num">18</span></td><td class=""><span class="day-num">19</span></td><td class=""><span class="day-num">20</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#f59e0b;--chip-rgb:245,158,11" data-detail='{&quot;course&quot;: &quot;中国品牌&quot;, &quot;teacher&quot;: &quot;叶巍岭&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-21&quot;}'>中国品牌</span></div><span class="day-num">21</span></td></tr><tr><td class="week-col">第13周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ec4899;--chip-rgb:236,72,153" data-detail='{&quot;course&quot;: &quot;冲突管理与谈判&quot;, &quot;teacher&quot;: &quot;韩王兰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-22&quot;}'>冲突管理与谈判</span></div><span class="day-num">22</span></td><td class=""><span class="day-num">23</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-11-24&quot;}'>行为金融学</span></div><span class="day-num">24</span></td><td class=""><span class="day-num">25</span></td><td class=""><span class="day-num">26</span></td><td class=""><span class="day-num">27</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#f59e0b;--chip-rgb:245,158,11" data-detail='{&quot;course&quot;: &quot;中国品牌&quot;, &quot;teacher&quot;: &quot;叶巍岭&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-28&quot;}'>中国品牌</span></div><span class="day-num">28</span></td></tr><tr><td class="week-col">第14周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ec4899;--chip-rgb:236,72,153" data-detail='{&quot;course&quot;: &quot;冲突管理与谈判&quot;, &quot;teacher&quot;: &quot;韩王兰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-11-29&quot;}'>冲突管理与谈判</span></div><span class="day-num">29</span></td><td class=""><span class="day-num">30</span></td><td class="other-month"><span class="day-num">1</span></td><td class="other-month"><span class="day-num">2</span></td><td class="other-month"><span class="day-num">3</span></td><td class="other-month"><span class="day-num">4</span></td><td class="other-month"><span class="day-num">5</span></td></tr></tbody></table></div>
+<div class="month-card" data-month-card="2026-12"><div class="month-header">十二月<span class="year">2026</span></div><table class="cal-table"><thead><tr><th class="week-th">周次</th><th class="we">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th class="we">六</th></tr></thead><tbody><tr><td class="week-col">第14周</td><td class="other-month"><span class="day-num">29</span></td><td class="other-month"><span class="day-num">30</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-12-01&quot;}'>行为金融学</span></div><span class="day-num">1</span></td><td class=""><span class="day-num">2</span></td><td class=""><span class="day-num">3</span></td><td class=""><span class="day-num">4</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#f59e0b;--chip-rgb:245,158,11" data-detail='{&quot;course&quot;: &quot;中国品牌&quot;, &quot;teacher&quot;: &quot;叶巍岭&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-05&quot;}'>中国品牌</span></div><span class="day-num">5</span></td></tr><tr><td class="week-col">第15周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#ec4899;--chip-rgb:236,72,153" data-detail='{&quot;course&quot;: &quot;冲突管理与谈判&quot;, &quot;teacher&quot;: &quot;韩王兰&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-06&quot;}'>冲突管理与谈判</span></div><span class="day-num">6</span></td><td class=""><span class="day-num">7</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#8b5cf6;--chip-rgb:139,92,246" data-detail='{&quot;course&quot;: &quot;行为金融学&quot;, &quot;teacher&quot;: &quot;陈旭卢&quot;, &quot;location&quot;: &quot;中山北一路369校区&quot;, &quot;time&quot;: &quot;周二晚 18:30-21:30&quot;, &quot;date&quot;: &quot;2026-12-08&quot;}'>行为金融学</span></div><span class="day-num">8</span></td><td class=""><span class="day-num">9</span></td><td class=""><span class="day-num">10</span></td><td class=""><span class="day-num">11</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#14b8a6;--chip-rgb:20,184,166" data-detail='{&quot;course&quot;: &quot;转型与领导力建设&quot;, &quot;teacher&quot;: &quot;归梅萍&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-12&quot;}'>转型与领导力</span></div><span class="day-num">12</span></td></tr><tr><td class="week-col">第16周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#84cc16;--chip-rgb:132,204,22" data-detail='{&quot;course&quot;: &quot;AI赋能全球企业管理模拟&quot;, &quot;teacher&quot;: &quot;董静&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-13&quot;}'>AI企业管理模拟</span></div><span class="day-num">13</span></td><td class=""><span class="day-num">14</span></td><td class=""><span class="day-num">15</span></td><td class=""><span class="day-num">16</span></td><td class=""><span class="day-num">17</span></td><td class=""><span class="day-num">18</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#14b8a6;--chip-rgb:20,184,166" data-detail='{&quot;course&quot;: &quot;转型与领导力建设&quot;, &quot;teacher&quot;: &quot;归梅萍&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-19&quot;}'>转型与领导力</span></div><span class="day-num">19</span></td></tr><tr><td class="week-col">第17周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#84cc16;--chip-rgb:132,204,22" data-detail='{&quot;course&quot;: &quot;AI赋能全球企业管理模拟&quot;, &quot;teacher&quot;: &quot;董静&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-20&quot;}'>AI企业管理模拟</span></div><span class="day-num">20</span></td><td class=""><span class="day-num">21</span></td><td class=""><span class="day-num">22</span></td><td class=""><span class="day-num">23</span></td><td class=""><span class="day-num">24</span></td><td class=""><span class="day-num">25</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#14b8a6;--chip-rgb:20,184,166" data-detail='{&quot;course&quot;: &quot;转型与领导力建设&quot;, &quot;teacher&quot;: &quot;归梅萍&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-26&quot;}'>转型与领导力</span></div><span class="day-num">26</span></td></tr><tr><td class="week-col">第18周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#84cc16;--chip-rgb:132,204,22" data-detail='{&quot;course&quot;: &quot;AI赋能全球企业管理模拟&quot;, &quot;teacher&quot;: &quot;董静&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2026-12-27&quot;}'>AI企业管理模拟</span></div><span class="day-num">27</span></td><td class=""><span class="day-num">28</span></td><td class=""><span class="day-num">29</span></td><td class=""><span class="day-num">30</span></td><td class=""><span class="day-num">31</span></td><td class="other-month"><span class="day-num">1</span></td><td class="other-month"><span class="day-num">2</span></td></tr></tbody></table></div>
+<div class="month-card" data-month-card="2027-01"><div class="month-header">一月<span class="year">2027</span></div><table class="cal-table"><thead><tr><th class="week-th">周次</th><th class="we">日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th class="we">六</th></tr></thead><tbody><tr><td class="week-col">第18周</td><td class="other-month"><span class="day-num">27</span></td><td class="other-month"><span class="day-num">28</span></td><td class="other-month"><span class="day-num">29</span></td><td class="other-month"><span class="day-num">30</span></td><td class="other-month"><span class="day-num">31</span></td><td class=""><span class="day-num">1</span></td><td class=""><span class="day-num">2</span></td></tr><tr><td class="week-col">第19周</td><td class=""><span class="day-num">3</span></td><td class=""><span class="day-num">4</span></td><td class=""><span class="day-num">5</span></td><td class=""><span class="day-num">6</span></td><td class=""><span class="day-num">7</span></td><td class=""><span class="day-num">8</span></td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#14b8a6;--chip-rgb:20,184,166" data-detail='{&quot;course&quot;: &quot;转型与领导力建设&quot;, &quot;teacher&quot;: &quot;归梅萍&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2027-01-09&quot;}'>转型与领导力</span></div><span class="day-num">9</span></td></tr><tr><td class="week-col">第20周</td><td class="has-course"><div class="badge-row"><span class="course-chip" style="background:#84cc16;--chip-rgb:132,204,22" data-detail='{&quot;course&quot;: &quot;AI赋能全球企业管理模拟&quot;, &quot;teacher&quot;: &quot;董静&quot;, &quot;location&quot;: &quot;国定路校区&quot;, &quot;time&quot;: &quot;全天 09:00-16:30&quot;, &quot;date&quot;: &quot;2027-01-10&quot;}'>AI企业管理模拟</span></div><span class="day-num">10</span></td><td class=""><span class="day-num">11</span></td><td class=""><span class="day-num">12</span></td><td class=""><span class="day-num">13</span></td><td class=""><span class="day-num">14</span></td><td class=""><span class="day-num">15</span></td><td class=""><span class="day-num">16</span></td></tr><tr><td class="week-col">第21周</td><td class=""><span class="day-num">17</span></td><td class=""><span class="day-num">18</span></td><td class=""><span class="day-num">19</span></td><td class=""><span class="day-num">20</span></td><td class=""><span class="day-num">21</span></td><td class=""><span class="day-num">22</span></td><td class=""><span class="day-num">23</span></td></tr><tr><td class="week-col">第22周</td><td class=""><span class="day-num">24</span></td><td class=""><span class="day-num">25</span></td><td class=""><span class="day-num">26</span></td><td class=""><span class="day-num">27</span></td><td class=""><span class="day-num">28</span></td><td class=""><span class="day-num">29</span></td><td class=""><span class="day-num">30</span></td></tr><tr><td class="week-col">第23周</td><td class=""><span class="day-num">31</span></td><td class="other-month"><span class="day-num">1</span></td><td class="other-month"><span class="day-num">2</span></td><td class="other-month"><span class="day-num">3</span></td><td class="other-month"><span class="day-num">4</span></td><td class="other-month"><span class="day-num">5</span></td><td class="other-month"><span class="day-num">6</span></td></tr></tbody></table></div>
+</div></div><!-- end calendar-wrap -->
+
+<!-- 明细 -->
+<div class="summary">
+<h2>课程明细</h2>
+<table class="summary-table"><thead><tr><th>日期</th><th>星期</th><th>课程名称</th><th>教师</th><th>校区</th><th>时间</th></tr></thead><tbody id="summary-tbody"></tbody></table>
+</div>
+<p class="footer-note">可直接导入日历 App · 双击 ICS 文件或拖入日历</p>
+
+</div><!-- end container -->
+
+<script>
+const COURSES = [{"date": "2026-09-05", "campus": "中山北一路369校区", "time": "09:00-12:00;13:30-16:30", "name": "财务报告与价值分析", "teacher": "孙峥", "color": "#3b82f6", "short": "财务报告与价值分析", "month": 9, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "59,130,246"}, {"date": "2026-09-06", "campus": "中山北一路369校区", "time": "09:00-12:00;13:30-16:30", "name": "财务报告与价值分析", "teacher": "孙峥", "color": "#3b82f6", "short": "财务报告与价值分析", "month": 9, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "59,130,246"}, {"date": "2026-09-12", "campus": "中山北一路369校区", "time": "09:00-12:00;13:30-16:30", "name": "财务报告与价值分析", "teacher": "孙峥", "color": "#3b82f6", "short": "财务报告与价值分析", "month": 9, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "59,130,246"}, {"date": "2026-09-13", "campus": "中山北一路369校区", "time": "09:00-12:00;13:30-16:30", "name": "财务报告与价值分析", "teacher": "孙峥", "color": "#3b82f6", "short": "财务报告与价值分析", "month": 9, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "59,130,246"}, {"date": "2026-10-17", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "供应链管理-企业", "teacher": "谢家平", "color": "#06b6d4", "short": "供应链管理", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "6,182,212"}, {"date": "2026-10-17", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创业投融资", "teacher": "蔺楠", "color": "#10b981", "short": "创业投融资", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "16,185,129"}, {"date": "2026-10-18", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创造团队竞争优势", "teacher": "容琰", "color": "#ef4444", "short": "团队竞争优势", "month": 10, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "239,68,68"}, {"date": "2026-10-18", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "新技术与创新管理", "teacher": "周照", "color": "#6366f1", "short": "新技术与创新", "month": 10, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "99,102,241"}, {"date": "2026-10-20", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 10, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-10-24", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "供应链管理-企业", "teacher": "谢家平", "color": "#06b6d4", "short": "供应链管理", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "6,182,212"}, {"date": "2026-10-24", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创业投融资", "teacher": "蔺楠", "color": "#10b981", "short": "创业投融资", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "16,185,129"}, {"date": "2026-10-25", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创造团队竞争优势", "teacher": "容琰", "color": "#ef4444", "short": "团队竞争优势", "month": 10, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "239,68,68"}, {"date": "2026-10-25", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "新技术与创新管理", "teacher": "周照", "color": "#6366f1", "short": "新技术与创新", "month": 10, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "99,102,241"}, {"date": "2026-10-27", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 10, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-10-31", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "供应链管理-企业", "teacher": "谢家平", "color": "#06b6d4", "short": "供应链管理", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "6,182,212"}, {"date": "2026-10-31", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创业投融资", "teacher": "蔺楠", "color": "#10b981", "short": "创业投融资", "month": 10, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "16,185,129"}, {"date": "2026-11-01", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创造团队竞争优势", "teacher": "容琰", "color": "#ef4444", "short": "团队竞争优势", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "239,68,68"}, {"date": "2026-11-01", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "新技术与创新管理", "teacher": "周照", "color": "#6366f1", "short": "新技术与创新", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "99,102,241"}, {"date": "2026-11-03", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 11, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-11-07", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "供应链管理-企业", "teacher": "谢家平", "color": "#06b6d4", "short": "供应链管理", "month": 11, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "6,182,212"}, {"date": "2026-11-07", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创业投融资", "teacher": "蔺楠", "color": "#10b981", "short": "创业投融资", "month": 11, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "16,185,129"}, {"date": "2026-11-08", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "创造团队竞争优势", "teacher": "容琰", "color": "#ef4444", "short": "团队竞争优势", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "239,68,68"}, {"date": "2026-11-08", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "新技术与创新管理", "teacher": "周照", "color": "#6366f1", "short": "新技术与创新", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "99,102,241"}, {"date": "2026-11-10", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 11, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-11-14", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "中国品牌", "teacher": "叶巍岭", "color": "#f59e0b", "short": "中国品牌", "month": 11, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "245,158,11"}, {"date": "2026-11-15", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "冲突管理与谈判", "teacher": "韩王兰", "color": "#ec4899", "short": "冲突管理与谈判", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "236,72,153"}, {"date": "2026-11-17", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 11, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-11-21", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "中国品牌", "teacher": "叶巍岭", "color": "#f59e0b", "short": "中国品牌", "month": 11, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "245,158,11"}, {"date": "2026-11-22", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "冲突管理与谈判", "teacher": "韩王兰", "color": "#ec4899", "short": "冲突管理与谈判", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "236,72,153"}, {"date": "2026-11-24", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 11, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-11-28", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "中国品牌", "teacher": "叶巍岭", "color": "#f59e0b", "short": "中国品牌", "month": 11, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "245,158,11"}, {"date": "2026-11-29", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "冲突管理与谈判", "teacher": "韩王兰", "color": "#ec4899", "short": "冲突管理与谈判", "month": 11, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "236,72,153"}, {"date": "2026-12-01", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 12, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-12-05", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "中国品牌", "teacher": "叶巍岭", "color": "#f59e0b", "short": "中国品牌", "month": 12, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "245,158,11"}, {"date": "2026-12-06", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "冲突管理与谈判", "teacher": "韩王兰", "color": "#ec4899", "short": "冲突管理与谈判", "month": 12, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "236,72,153"}, {"date": "2026-12-08", "campus": "中山北一路369校区", "time": "18:30-21:30", "name": "行为金融学", "teacher": "陈旭卢", "color": "#8b5cf6", "short": "行为金融学", "month": 12, "year": 2026, "weekday": "二", "weekdayIdx": 1, "tagRgb": "139,92,246"}, {"date": "2026-12-12", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "转型与领导力建设", "teacher": "归梅萍", "color": "#14b8a6", "short": "转型与领导力", "month": 12, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "20,184,166"}, {"date": "2026-12-13", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "AI赋能全球企业管理模拟", "teacher": "董静", "color": "#84cc16", "short": "AI企业管理模拟", "month": 12, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "132,204,22"}, {"date": "2026-12-19", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "转型与领导力建设", "teacher": "归梅萍", "color": "#14b8a6", "short": "转型与领导力", "month": 12, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "20,184,166"}, {"date": "2026-12-20", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "AI赋能全球企业管理模拟", "teacher": "董静", "color": "#84cc16", "short": "AI企业管理模拟", "month": 12, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "132,204,22"}, {"date": "2026-12-26", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "转型与领导力建设", "teacher": "归梅萍", "color": "#14b8a6", "short": "转型与领导力", "month": 12, "year": 2026, "weekday": "六", "weekdayIdx": 5, "tagRgb": "20,184,166"}, {"date": "2026-12-27", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "AI赋能全球企业管理模拟", "teacher": "董静", "color": "#84cc16", "short": "AI企业管理模拟", "month": 12, "year": 2026, "weekday": "日", "weekdayIdx": 6, "tagRgb": "132,204,22"}, {"date": "2027-01-09", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "转型与领导力建设", "teacher": "归梅萍", "color": "#14b8a6", "short": "转型与领导力", "month": 1, "year": 2027, "weekday": "六", "weekdayIdx": 5, "tagRgb": "20,184,166"}, {"date": "2027-01-10", "campus": "国定路校区", "time": "09:00-12:00;13:30-16:30", "name": "AI赋能全球企业管理模拟", "teacher": "董静", "color": "#84cc16", "short": "AI企业管理模拟", "month": 1, "year": 2027, "weekday": "日", "weekdayIdx": 6, "tagRgb": "132,204,22"}];
+const MONTHS = [
+  {label:'全部月份',value:0},
+  {label:'2026年 9月',value:9,year:2026},
+  {label:'2026年 10月',value:10,year:2026},
+  {label:'2026年 11月',value:11,year:2026},
+  {label:'2026年 12月',value:12,year:2026},
+  {label:'2027年 1月',value:1,year:2027}
+];
+const ALL_COURSES = [...new Set(COURSES.map(c=>c.name))];
+const WD_CLASSES = ['wd0','wd1','wd2','wd3','wd4','wd5','wd6'];
+
+let selMonth=0, selCourse='';
+
+function init(){
+  spawnParticles();
+  renderDropdowns();
+  filterAndRender();
+}
+
+/* 粒子背景 */
+function spawnParticles(){
+  const container = document.getElementById('particles');
+  const colors = ['#c084fc','#818cf8','#f472b6','#34d399','#fbbf24','#f87171','#60a5fa'];
+  let html='';
+  for(let i=0;i<24;i++){
+    const size = 2+Math.random()*5;
+    html+=`<span class="particle" style="
+      left:${Math.random()*100}%;width:${size}px;height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      --dur:${12+Math.random()*20}s;--delay:${Math.random()*-20}s;
+      --rot:${Math.random()*360}deg"></span>`;
+  }
+  container.innerHTML=html;
+}
+
+function renderDropdowns(){
+  const mMenu = document.getElementById('month-menu');
+  mMenu.innerHTML = MONTHS.map((m,i)=>`<div class="dropdown-option${selMonth===m.value?' selected':''}" data-month="${m.value}" onclick="selectMonth(${m.value})">${m.label}</div>`).join('');
+  const cMenu = document.getElementById('course-menu');
+  cMenu.innerHTML = `<div class="dropdown-option${!selCourse?' selected':''}" onclick="selectCourse('')"><span class="clear-option">全部课程</span></div>`+
+    ALL_COURSES.map(cn=>`<div class="dropdown-option${selCourse===cn?' selected':''}" data-course="${cn}" onclick="selectCourse('${cn}')"><span class="dot" style="background:${COURSES.find(x=>x.name===cn).color}"></span>${cn}</div>`).join('');
+}
+
+function selectMonth(v){
+  selMonth=v;document.getElementById('month-label').textContent=v===0?'全部月份':MONTHS.find(m=>m.value===v).label;
+  renderDropdowns();closeAllDropdowns();filterAndRender();
+}
+function selectCourse(cn){
+  selCourse=cn;document.getElementById('course-label').textContent=cn||'全部课程';
+  renderDropdowns();closeAllDropdowns();filterAndRender();
+}
+
+function toggleDropdown(id){
+  const dd=document.getElementById(id);const wasOpen=dd.classList.contains('open');
+  closeAllDropdowns();if(wasOpen)return;
+  const rect=dd.getBoundingClientRect();const spaceBelow=window.innerHeight-rect.bottom;
+  dd.classList.toggle('flip',spaceBelow<300);dd.classList.add('open');
+}
+function closeAllDropdowns(){document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));}
+document.addEventListener('click',e=>{if(!e.target.closest('.dropdown'))closeAllDropdowns();});
+
+function filterAndRender(){
+  let filtered = COURSES;
+  if(selMonth>0) filtered = filtered.filter(c=>c.month===selMonth);
+  if(selCourse) filtered = filtered.filter(c=>c.name===selCourse);
+  renderCards(filtered);renderCalendar(filtered);renderSummary(filtered);updateCount(filtered);
+}
+
+function renderCards(list){
+  const container = document.getElementById('card-scroll');
+  if(list.length===0){container.innerHTML='<div class="card-empty">没有匹配的课程安排</div>';return;}
+  container.innerHTML = list.map((c,i)=>{
+    const isNight = c.time.includes('18:30');
+    const timeLabel = isNight?'周二晚 18:30-21:30':'全天 09:00-16:30';
+    return `<div class="course-card" style="--card-color:${c.color};animation-delay:${i*55}ms" onclick="scrollToDate('${c.date}')">
+      <div class="card-date">
+        ${c.date}
+        <span class="wd-tag" style="background:${c.color};--tag-rgb:${c.tagRgb}">周${c.weekday}</span>
+      </div>
+      <div class="card-title">${c.name}</div>
+      <div class="card-teacher">${c.teacher} · ${c.campus}</div>
+      <div class="card-meta">
+        <span>${timeLabel}</span>
+        <span>${c.campus}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateCount(list){
+  document.getElementById('match-count').innerHTML = `<span>${list.length}</span> 条匹配`;
+}
+
+function scrollToDate(dateStr){
+  const d = new Date(dateStr);const m = d.getMonth()+1;const yr = d.getFullYear();
+  const card = document.querySelector(`[data-month-card="${yr}-${String(m).padStart(2,'0')}"]`);
+  if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('highlight');setTimeout(()=>card.classList.remove('highlight'),2200);}
+}
+
+function renderCalendar(list){
+  const matchDates = new Set(list.map(c=>c.date));
+  const selShort = selCourse ? COURSES.find(c=>c.name===selCourse)?.short : null;
+  document.querySelectorAll('.cal-table .course-chip').forEach(chip=>chip.classList.remove('dim-chip'));
+  document.querySelectorAll('.cal-table td.has-course').forEach(td=>{
+    const dn = td.querySelector('.day-num');if(!dn)return;
+    const card = td.closest('.month-card');if(!card)return;
+    const dataKey = card.getAttribute('data-month-card');if(!dataKey)return;
+    const [yr,mStr] = dataKey.split('-');const m = parseInt(mStr);const day = parseInt(dn.textContent);
+    const ds = `${yr}-${String(m).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    if(matchDates.has(ds)){
+      td.style.opacity='1';
+      if(selShort){
+        td.querySelectorAll('.course-chip').forEach(chip=>{
+          if(chip.textContent.trim() !== selShort) chip.classList.add('dim-chip');
+        });
+      }
+    } else {td.style.opacity='0.18';}
+  });
+  document.querySelectorAll('.cal-table td:not(.has-course)').forEach(td=>td.style.opacity='1');
+  document.querySelectorAll('.month-card').forEach(card=>card.classList.remove('highlight'));
+  const monthSet = new Set(list.map(c=>`${c.year}-${String(c.month).padStart(2,'0')}`));
+  monthSet.forEach(key=>{
+    const card = document.querySelector(`[data-month-card="${key}"]`);
+    if(card && selMonth===0 && selCourse) card.classList.add('highlight');
+  });
+}
+
+function renderSummary(list){
+  const tbody = document.getElementById('summary-tbody');
+  if(list.length===0){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">无匹配结果</td></tr>';return;}
+  tbody.innerHTML = list.map(c=>{
+    const wdCls = WD_CLASSES[c.weekdayIdx];
+    return `<tr><td>${c.date}</td><td><span class="wd-badge ${wdCls}">周${c.weekday}</span></td><td>${c.name}</td><td>${c.teacher}</td><td>${c.campus}</td><td>${c.time}</td></tr>`;
+  }).join('');
+}
+
+function scrollCards(dir){
+  const el = document.getElementById('card-scroll');el.scrollBy({left:dir*340,behavior:'smooth'});
+}
+
+function toggleCalendar(){
+  const wrap = document.getElementById('calendar-wrap');const header = document.getElementById('cal-section-header');
+  wrap.classList.toggle('collapsed');header.classList.toggle('collapsed');
+}
+
+/* ===== 课程弹框 ===== */
+(function setupModal(){
+  const calWrap = document.getElementById('calendar-wrap');
+
+  calWrap.addEventListener('click', function(e){
+    const chip = e.target.closest('.course-chip');
+    if(!chip) return;
+    const detailStr = chip.getAttribute('data-detail');
+    if(!detailStr) return;
+    try{
+      const detail = JSON.parse(detailStr);
+      openModal(detail, chip);
+    }catch(err){console.error('解析课程详情失败', err);}
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+
+  window.openModal = function(detail, chipEl){
+    // Close existing modal first
+    closeModal(true);
+
+    // Extract chip color
+    const chipColor = chipEl.style.background || '#7c3aed';
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+
+    const fieldIcons = {
+      teacher: '&#128100;',
+      time: '&#128339;',
+      location: '&#128205;',
+      date: '&#128197;'
+    };
+    const fieldLabels = {
+      teacher: '授课教师',
+      time: '上课时间',
+      location: '上课地点',
+      date: '上课日期'
+    };
+
+    const fields = [];
+    if(detail.teacher) fields.push({icon:fieldIcons.teacher,label:fieldLabels.teacher,value:detail.teacher});
+    if(detail.time) fields.push({icon:fieldIcons.time,label:fieldLabels.time,value:detail.time});
+    if(detail.location) fields.push({icon:fieldIcons.location,label:fieldLabels.location,value:detail.location});
+    if(detail.date) fields.push({icon:fieldIcons.date,label:fieldLabels.date,value:detail.date});
+
+    const fieldsHTML = fields.map(f=>`
+      <div class="modal-field">
+        <div class="field-icon">${f.icon}</div>
+        <div class="field-content">
+          <div class="field-label">${f.label}</div>
+          <div class="field-value">${f.value}</div>
+        </div>
+      </div>
+    `).join('');
+
+    overlay.innerHTML = `
+      <div class="modal-dialog">
+        <div class="modal-color-bar" style="background:${chipColor}"></div>
+        <div class="modal-body">
+          <div class="modal-title">${detail.course || ''}</div>
+          ${fieldsHTML}
+        </div>
+        <button class="modal-close-btn" onclick="closeModal()">关闭</button>
+      </div>
+    `;
+
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeModal();
+    });
+
+    document.body.appendChild(overlay);
+  };
+
+  window.closeModal = function(instant){
+    const overlay = document.querySelector('.modal-overlay');
+    if(!overlay) return;
+    if(instant){
+      overlay.remove();return;
+    }
+    overlay.classList.add('closing');
+    const dialog = overlay.querySelector('.modal-dialog');
+    if(dialog) dialog.classList.add('closing');
+    overlay.addEventListener('animationend', function(){
+      overlay.remove();
+    },{once:true});
+  };
+})();
+
+init();
+</script>
+</body>
+</html>
